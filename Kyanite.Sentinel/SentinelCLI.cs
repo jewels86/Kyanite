@@ -16,9 +16,18 @@ namespace Kyanite.Sentinel
 		public static async Task Run()
 		{
 			AnsiConsole.MarkupLine("Welcome to [blue]Kyanite Sentinel[/]!");
-			AnsiConsole.MarkupLine($"To connect from [green]Kyanite Vector[/], use the address [bold]{GeneralUtilities.GetLocalIPAddress()}[/]:{GeneralUtilities.GenerateRandomPort()}");
-			
+			AnsiConsole.MarkupLine($"Connections from [lime]Vector[/] clients to be routed to [underline]{GeneralUtilities.GetLocalIPAddress()}:{GeneralUtilities.GenerateRandomPort()}[/].");
 
+			CommandDispatcher dispatch = new();
+
+
+			while (!dispatch.Exit)
+			{
+				string input = AnsiConsole.Prompt(new TextPrompt<string>($"({dispatch.StylizedLocation}) >> ")
+					.AllowEmpty());
+				string[] args = input.Split(' ');
+
+			}
 		}
 	}
 }
