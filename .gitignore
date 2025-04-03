@@ -1,3 +1,5 @@
 .vs
 **/bin
 **/obj
+/sentinel/sentinel.vcxproj.filters
+/sentinel/sentinel.vcxproj.user
