@@ -17,12 +17,12 @@ int main()
 	package.stylized_location = "[blue]sentinel[/]";
 	package.running = true;
 	package.lines = 2;
+	package.environment = new std::unordered_map<std::string, std::string>();
 	Package* package_ptr = &package;
 
 	CommandDispatcher dispatch = CommandDispatcher(package_ptr);
 	dispatch.registerCommand("exit", exit_command);
 	dispatch.registerCommand("clear", clear_command);
-	dispatch.registerCommand("fclear", fclear_command);
 	
 	while (package.running) {
 		std::string input = ::input(formats("({{sl}}) << ", quick_map({ "sl" }, { package.stylized_location })));
