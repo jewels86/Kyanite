@@ -1,11 +1,16 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 
 #include "colors.h"
+#include "command_dispatcher.h"
+
+
 
 int main()
 {
-	
-	return 0;
-};
+    print("Welcome to [blue]%s[/]!");
+
+    return 0;
+}

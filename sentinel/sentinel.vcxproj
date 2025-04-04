@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="colors.cpp" />
     <ClCompile Include="command_dispatcher.cpp" />
     <ClCompile Include="sentinel.cpp" />
   </ItemGroup>
