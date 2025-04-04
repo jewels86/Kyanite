@@ -8,7 +8,7 @@ struct Package
 {
 	std::string location;
 	std::string stylized_location;
-	bool running;
+	bool running = false;
 };
 
 #endif

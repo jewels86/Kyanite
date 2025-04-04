@@ -3,7 +3,7 @@
 #include "command.h"
 #include <string>
 
-CommandDispatcher::CommandDispatcher(Package& package) {
+CommandDispatcher::CommandDispatcher(Package *package) {
 	this->package = package;
 }
 
@@ -14,15 +14,16 @@ void CommandDispatcher::unregisterCommand(std::string trigger) {
 	commands.erase(trigger);
 }
 
-void CommandDispatcher::dispatch(const std::vector<std::string>& args) {
+bool CommandDispatcher::dispatch(const std::vector<std::string>& args) {
 	if (args.empty()) {
-		return;
+		return false;
 	}
 	std::string command = args[0];
 	if (commands.find(command) != commands.end()) {
 		commands[command](args, package);
+		return true;
 	}
 	else {
-		std::cout << "Command not found: " << command << std::endl;
+		return false;
 	}
 }

@@ -6,49 +6,47 @@
 #include <string>
 
 std::string formats(const std::string& format, const std::unordered_map<std::string, std::string>& variables) {
-	std::regex color_regex(R"(\[([a-zA-Z]+)\](.*?)\[\/\])");
-	std::regex var_regex(R"(\{\{(\w+)\}\})");
-	std::smatch match;
 	std::string result = format;
-	std::string::const_iterator searchStart(result.cbegin());
+	std::regex variable_regex(R"(\{\{(\w+)\}\})");
+	std::smatch match;
 
-	while (std::regex_search(searchStart, result.cend(), match, var_regex)) {
-		std::string var_name = match[1].str();
-		std::string var_value = variables.at(var_name);
-		result.replace(match.position(0), match.length(0), var_value);
-		searchStart = result.cbegin() + match.position(0) + var_value.length();
+	while (std::regex_search(result, match, variable_regex)) {
+		std::string variable_name = match[1].str();
+		if (variables.find(variable_name) != variables.end()) {
+			result.replace(match.position(0), match.length(0), variables.at(variable_name));
+		} else {
+			result.replace(match.position(0), match.length(0), "");
+		}
 	}
 
-	searchStart = result.cbegin();
-
-	while (std::regex_search(searchStart, result.cend(), match, color_regex)) {
+	std::regex color_regex(R"(\[([a-zA-Z]+)\](.*?)\[\/\])");
+	while (std::regex_search(result, match, color_regex)) {
 		std::string color = match[1].str();
 		std::string text = match[2].str();
 		std::string color_code;
 
-		if (color == "blue") {
-			color_code = COLOR_BLUE;
-		} else if (color == "red") {
-			color_code = COLOR_RED;
+		if (color == "red") {
+			color_code = "\033[31m";
 		} else if (color == "green") {
-			color_code = COLOR_GREEN;
+			color_code = "\033[32m";
 		} else if (color == "yellow") {
-			color_code = COLOR_YELLOW;
-		} else if (color == "bold") {
-			color_code = COLOR_BOLD;
-		} else if (color == "underline") {
-			color_code = COLOR_UNDERLINE;
+			color_code = "\033[33m";
+		} else if (color == "blue") {
+			color_code = "\033[34m";
+		} else if (color == "magenta") {
+			color_code = "\033[35m";
+		} else if (color == "cyan") {
+			color_code = "\033[36m";
 		} else {
-			color_code = COLOR_RESET;
+			color_code = "\033[0m"; // reset color
 		}
 
-		std::string colored_text = color_code + text + COLOR_RESET;
-		result.replace(match.position(0), match.length(0), colored_text);
-		searchStart = result.cbegin() + match.position(0) + colored_text.length();
+		result.replace(match.position(0), match.length(0), color_code + text + "\033[0m");
 	}
 
 	return result;
 }
+
 
 void prints(const std::string& format, const std::unordered_map<std::string, std::string>& variables) {
 	std::cout << formats(format, variables) << std::endl;
