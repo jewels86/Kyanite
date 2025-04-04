@@ -61,5 +61,9 @@ const std::string COLOR_BACKGROUND_WHITE = "\033[47m";
 
 void prints(const std::string& format, const std::unordered_map<std::string, std::string>& variables = {});
 std::unordered_map<std::string, std::string> quick_map(const std::vector<std::string>& keys, const std::vector<std::string>& values);
+std::string formats(const std::string& format, const std::unordered_map<std::string, std::string>& variables = {});
+std::string input(const std::string prompt);
+std::string options(const std::string& prompt, const std::vector<std::string>& options);
+std::vector<std::string> split_string(const std::string& str, char delimiter);
 
 #endif
