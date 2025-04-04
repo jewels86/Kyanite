@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <string>
 
-void print(const std::string& format, const std::unordered_map<std::string, std::string>& variables = {}) {
+void prints(const std::string& format, const std::unordered_map<std::string, std::string>& variables) {
     std::regex color_regex(R"(\[([a-zA-Z]+)\](.*?)\[\/\])");
     std::regex var_regex(R"(\{\{(\w+)\}\})");
     std::smatch match;
@@ -48,4 +48,12 @@ void print(const std::string& format, const std::unordered_map<std::string, std:
     }
 
     std::cout << result << std::endl;
+}
+
+std::unordered_map<std::string, std::string> quick_map(const std::vector<std::string>& keys, const std::vector<std::string>& values) {
+    std::unordered_map<std::string, std::string> variables;
+    for (size_t i = 0; i < keys.size() && i < values.size(); ++i) {
+        variables[keys[i]] = values[i];
+    }
+    return variables;
 }

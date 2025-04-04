@@ -2,6 +2,8 @@
 #define COLORS_H
 
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 #ifdef _WIN32
 const std::string COLOR_RESET = "\033[0m";
@@ -56,5 +58,8 @@ const std::string COLOR_BACKGROUND_MAGENTA = "\033[45m";
 const std::string COLOR_BACKGROUND_CYAN = "\033[46m";
 const std::string COLOR_BACKGROUND_WHITE = "\033[47m";
 #endif
+
+void prints(const std::string& format, const std::unordered_map<std::string, std::string>& variables = {});
+std::unordered_map<std::string, std::string> quick_map(const std::vector<std::string>& keys, const std::vector<std::string>& values);
 
 #endif

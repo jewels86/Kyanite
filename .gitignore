@@ -5,3 +5,4 @@
 /sentinel/sentinel.vcxproj.user
 /sentinel/x64/Debug
 /x64/Debug
+*.out

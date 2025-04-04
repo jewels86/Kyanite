@@ -5,12 +5,11 @@
 
 #include "colors.h"
 #include "command_dispatcher.h"
-
-
+#include "sentinel.h"
 
 int main()
 {
-    print("Welcome to [blue]%s[/]!");
+    prints("Welcome to [blue]Kyanite Sentinel[/]!");
 
     return 0;
 }
