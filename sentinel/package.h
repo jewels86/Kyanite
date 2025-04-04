@@ -9,6 +9,7 @@ struct Package
 	std::string location;
 	std::string stylized_location;
 	bool running = false;
+	int lines = 0;
 };
 
 #endif

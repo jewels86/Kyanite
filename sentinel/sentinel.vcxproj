@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="commands\clear.cpp" />
     <ClCompile Include="commands\exit.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="command_dispatcher.cpp" />
