@@ -7,17 +7,22 @@ CommandDispatcher::CommandDispatcher(Package& package) {
 	this->package = package;
 }
 
-void CommandDispatcher::registerCommand(const Command& command) {
-	commands[command.name()] = command;
+void CommandDispatcher::registerCommand(std::string trigger, const COMMAND_CALLBACK_TYPE callback) {
+	commands[trigger] = callback;
 }
-void CommandDispatcher::unregisterCommand(const std::string& commandName) {
-	commands.erase(commandName);
+void CommandDispatcher::unregisterCommand(std::string trigger) {
+	commands.erase(trigger);
 }
-void CommandDispatcher::dispatch(const std::string& commandName, const std::vector<std::string>& args) {
-	if (commands.find(commandName) != commands.end()) {
-		commands[commandName].execute(args, package);
+
+void CommandDispatcher::dispatch(const std::vector<std::string>& args) {
+	if (args.empty()) {
+		return;
+	}
+	std::string command = args[0];
+	if (commands.find(command) != commands.end()) {
+		commands[command](args, package);
 	}
 	else {
-		std::cerr << "Command not found: " << commandName << std::endl;
+		std::cout << "Command not found: " << command << std::endl;
 	}
 }
