@@ -3,3 +3,5 @@
 **/obj
 /sentinel/sentinel.vcxproj.filters
 /sentinel/sentinel.vcxproj.user
+/sentinel/x64/Debug
+/x64/Debug
