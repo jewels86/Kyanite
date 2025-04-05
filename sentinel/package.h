@@ -4,6 +4,12 @@
 #include <string>
 #include <stdbool.h>
 #include <unordered_map>
+#include <functional>
+
+#define MODULE_TYPE std::function<void(Package*)>
+#define COMMAND_CALLBACK_TYPE std::function<void(const std::vector<std::string>&, Package*)>
+#define REGISTER_COMMAND_TYPE std::function<void(const std::string, const COMMAND_CALLBACK_TYPE)>
+#define UNREGISTER_COMMAND_TYPE std::function<void(const std::string)>
 
 struct Package
 {
@@ -12,7 +18,11 @@ struct Package
 	bool running = false;
 	int lines = 0;
 
-	std::unordered_map<std::string, std::string> *environment;
+	std::unordered_map<std::string, std::string> *environment = nullptr;
+	std::unordered_map<std::string, MODULE_TYPE> *modules = nullptr;
+
+	REGISTER_COMMAND_TYPE register_func;
+	UNREGISTER_COMMAND_TYPE unregister_func;
 };
 
 #endif

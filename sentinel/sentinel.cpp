@@ -7,6 +7,7 @@
 #include "command_dispatcher.h"
 #include "sentinel.h"
 #include "commands/commands.h"
+#include "modules/modules.h"
 
 int main()
 {
@@ -18,11 +19,22 @@ int main()
 	package.running = true;
 	package.lines = 2;
 	package.environment = new std::unordered_map<std::string, std::string>();
+	package.modules = new std::unordered_map<std::string, MODULE_TYPE>();
 	Package* package_ptr = &package;
 
 	CommandDispatcher dispatch = CommandDispatcher(package_ptr);
-	dispatch.registerCommand("exit", exit_command);
+	dispatch.registerCommand("exit", standard_exit_command);
 	dispatch.registerCommand("clear", clear_command);
+	dispatch.registerCommand("use", use_command);
+
+	package.register_func = [&](const std::string trigger, const COMMAND_CALLBACK_TYPE callback) {
+		dispatch.registerCommand(trigger, callback);
+	};
+	package.unregister_func = [&](const std::string trigger) {
+		dispatch.unregisterCommand(trigger);
+	};
+
+	package.modules->insert({ "wifi", wifi_module });
 	
 	while (package.running) {
 		std::string input = ::input(formats("({{sl}}) << ", quick_map({ "sl" }, { package.stylized_location })));

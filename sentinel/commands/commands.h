@@ -5,8 +5,8 @@
 #include <vector>
 #include "../package.h"
 
-void exit_command(const std::vector<std::string>& args, Package *package);
+void standard_exit_command(const std::vector<std::string>& args, Package *package);
 void clear_command(const std::vector<std::string>& args, Package* package);
-void fclear_command(const std::vector<std::string>& args, Package* package);
+void use_command(const std::vector<std::string>& args, Package* package);
 
 #endif
