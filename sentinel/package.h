@@ -10,6 +10,7 @@
 #define COMMAND_CALLBACK_TYPE std::function<void(const std::vector<std::string>&, Package*)>
 #define REGISTER_COMMAND_TYPE std::function<void(const std::string, const COMMAND_CALLBACK_TYPE)>
 #define UNREGISTER_COMMAND_TYPE std::function<void(const std::string)>
+#define DISPATCH_COMMAND_TYPE std::function<bool(const std::vector<std::string>&)>
 
 struct Package
 {
@@ -23,6 +24,7 @@ struct Package
 
 	REGISTER_COMMAND_TYPE register_func;
 	UNREGISTER_COMMAND_TYPE unregister_func;
+	DISPATCH_COMMAND_TYPE dispatch_func;
 };
 
 #endif
