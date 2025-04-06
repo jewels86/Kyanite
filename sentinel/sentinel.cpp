@@ -33,6 +33,9 @@ int main()
 	package.unregister_func = [&](const std::string trigger) {
 		dispatch.unregisterCommand(trigger);
 	};
+	package.dispatch_func = [&](const std::vector<std::string> args) {
+		return dispatch.dispatch(args);
+	};
 
 	package.modules->insert({ "wifi", wifi_module });
 	
