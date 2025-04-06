@@ -20,7 +20,7 @@ class CommandDispatcher
 		CommandDispatcher(Package *package);
 		void registerCommand(std::string trigger, const COMMAND_CALLBACK_TYPE callback);
 		void unregisterCommand(std::string trigger);
-		bool dispatch(const std::vector<std::string>& args);
+		bool dispatch(const std::string command);
 };
 
 #endif

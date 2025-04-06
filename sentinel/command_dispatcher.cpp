@@ -1,6 +1,7 @@
 #include "command_dispatcher.h"
 #include "package.h"
 #include "command.h"
+#include "console.h"
 #include <string>
 
 CommandDispatcher::CommandDispatcher(Package *package) {
@@ -14,16 +15,16 @@ void CommandDispatcher::unregisterCommand(std::string trigger) {
 	commands.erase(trigger);
 }
 
-bool CommandDispatcher::dispatch(const std::vector<std::string>& args) {
-	if (args.empty()) {
+bool CommandDispatcher::dispatch(const std::string command) {
+	if (command == "") {
 		return false;
 	}
-	std::string command = args[0];
-	if (commands.find(command) != commands.end()) {
-		commands[command](args, package);
-		return true;
+	for (const auto& _command : commands) {
+		if (command.find(_command.first) == 0) {
+			std::vector<std::string> args = split_string(command, ' ');
+			_command.second(args, package);
+			return true;
+		}
 	}
-	else {
-		return false;
-	}
+	return false;
 }

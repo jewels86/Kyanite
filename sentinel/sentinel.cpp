@@ -33,11 +33,12 @@ int main()
 	package.unregister_func = [&](const std::string trigger) {
 		dispatch.unregisterCommand(trigger);
 	};
-	package.dispatch_func = [&](const std::vector<std::string> args) {
-		return dispatch.dispatch(args);
+	package.dispatch_func = [&](const std::string command) {
+		return dispatch.dispatch(command);
 	};
 
 	package.modules->insert({ "wifi", wifi_module });
+	package.modules->insert({ "bluetooth", bluetooth_module });
 	
 	while (package.running) {
 		std::string input = ::input(formats("({{sl}}) << ", quick_map({ "sl" }, { package.stylized_location })));
@@ -45,11 +46,10 @@ int main()
 			continue;
 		}
 
-		std::vector<std::string> args = split_string(input, ' ');
 		package.lines += 1;
 		
-		if (!dispatch.dispatch(args)) {
-			prints("({{sl}}) >> [red]Command not found[/]: \"{{c}}\"", quick_map({ "sl", "c"}, {package.stylized_location, args[0]}));
+		if (!dispatch.dispatch(input)) {
+			prints("({{sl}}) >> [red]Invalid input[/]: \"{{c}}\"", quick_map({ "sl", "c"}, {package.stylized_location, input}));
 		}
 	}
 

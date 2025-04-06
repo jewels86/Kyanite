@@ -4,5 +4,6 @@
 #include "../package.h"
 
 void wifi_module(Package* package);
+void bluetooth_module(Package* package);
 
 #endif

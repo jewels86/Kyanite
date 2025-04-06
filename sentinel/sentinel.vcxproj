@@ -131,6 +131,7 @@
     <ClCompile Include="commands\exit.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="command_dispatcher.cpp" />
+    <ClCompile Include="modules\bluetooth.cpp" />
     <ClCompile Include="modules\wifi.cpp" />
     <ClCompile Include="sentinel.cpp" />
   </ItemGroup>
