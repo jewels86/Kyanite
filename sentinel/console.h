@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "package.h"
 
 #ifdef _WIN32
 const std::string COLOR_RESET = "\033[0m";

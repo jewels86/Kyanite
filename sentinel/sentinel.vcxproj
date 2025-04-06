@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,11 +130,13 @@
   <ItemGroup>
     <ClCompile Include="commands\clear.cpp" />
     <ClCompile Include="commands\exit.cpp" />
+    <ClCompile Include="commands\use.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="command_dispatcher.cpp" />
     <ClCompile Include="modules\bluetooth.cpp" />
     <ClCompile Include="modules\wifi.cpp" />
     <ClCompile Include="sentinel.cpp" />
+    <ClCompile Include="wrappers\bluetooth_wrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commands\commands.h" />
@@ -141,6 +144,7 @@
     <ClInclude Include="command_dispatcher.h" />
     <ClInclude Include="Modules\modules.h" />
     <ClInclude Include="package.h" />
+    <ClInclude Include="wrappers\bluetooth_wrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
