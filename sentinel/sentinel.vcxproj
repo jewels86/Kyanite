@@ -145,6 +145,7 @@
     <ClInclude Include="Modules\modules.h" />
     <ClInclude Include="package.h" />
     <ClInclude Include="wrappers\bluetooth_wrapper.h" />
+    <ClInclude Include="wrappers\wifi_wrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

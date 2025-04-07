@@ -98,57 +98,34 @@ void BluetoothWrapper::print_device_info(const std::string& address, Package& pa
 #ifdef __linux__
 std::vector<std::string> BluetoothWrapper::list_devices() {
 	std::vector<std::string> devices;
-	bdaddr_t bdaddr;
+	
 	int dev_id = hci_get_route(NULL);
 	int sock = hci_open_dev(dev_id);
-	if (sock < 0) {
-		prints("[red]Failed to open HCI device[/]");
-		return devices;
-	}
+	inquiry_info* ii = nullptr;
+	int max_rsp = 255;
+	int len = 8;
+	int flags = IREQ_CACHE_FLUSH;
 
-	inquiry_info* ii = NULL;
-	int num_rsp = hci_inquiry(dev_id, 8, 255, NULL, &ii, IREQ_CACHE_FLUSH);
-	if (num_rsp < 0) {
-		prints("[red]Failed to perform inquiry[/]");
-		hci_close_dev(sock);
-		return devices;
-	}
+	int num_rsp = hci_inquiry(dev_id, len, max_rsp, NULL, &ii, flags);
+
 	for (int i = 0; i < num_rsp; i++) {
-		char name[248];
-		char address[18];
-		bdaddr_t addr = ii[i].bdaddr;
-		hci_read_remote_name(sock, &addr, sizeof(name), name, 0);
-		snprintf(address, sizeof(address), "%02X:%02X:%02X:%02X:%02X:%02X",
-			addr.b[5], addr.b[4], addr.b[3], addr.b[2], addr.b[1], addr.b[0]);
+		char addr[19] = { 0 };
+		char name[248] = { 0 };
+		ba2str(&(ii[i].bdaddr), addr);
+		hci_read_remote_name(sock, &(ii[i].bdaddr), sizeof(name), name, 0);
+
 		std::stringstream ss;
-		ss << name << " (" << address << ")";
+		ss << name << " (" << addr << ")";
 		devices.push_back(ss.str());
 	}
+
 	free(ii);
 	hci_close_dev(sock);
+
 	return devices;
 }
 
 void BluetoothWrapper::print_device_info(const std::string& address, Package& package) {
-	bdaddr_t bdaddr;
-	if (str2ba(address.c_str(), &bdaddr) < 0) {
-		prints("({{sl}}) >> [red]Invalid address format[/]", quick_map({ "sl" }, { package.stylized_location }));
-		return;
-	}
-	int dev_id = hci_get_route(NULL);
-	int sock = hci_open_dev(dev_id);
-	if (sock < 0) {
-		prints("({{sl}}) >> [red]Failed to open HCI device[/]", quick_map({ "sl" }, { package.stylized_location }));
-		return;
-	}
-	ba_devinfo_t devinfo;
-	if (hci_read_remote_name(sock, &bdaddr, sizeof(devinfo), devinfo.name, 0) < 0) {
-		prints("({{sl}}) >> [red]Failed to read remote name[/]", quick_map({ "sl" }, { package.stylized_location }));
-		hci_close_dev(sock);
-		return;
-	}
-	prints("({{sl}}) \t>> Name: {{name}}", quick_map({ "sl", "name" }, { package.stylized_location, devinfo.name }));
-	prints("({{sl}}) \t>> Address: {{addr}}", quick_map({ "sl", "addr" }, { package.stylized_location, address }));
-	hci_close_dev(sock);
+		
 }
 #endif
